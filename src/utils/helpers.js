@@ -5,8 +5,8 @@ export const saveUserToken = token => window.localStorage.setItem(tokenKey, toke
 export const getUserToken = () => window.localStorage.getItem(tokenKey);
 export const removeUserToken = () => window.localStorage.removeItem(tokenKey);
 
-export const getTokenInfo = (getUserToken)=> decodeToken(getUserToken);
 const userToken = getUserToken();
+export const getTokenInfo = ()=> decodeToken(userToken);
 export const validateToken = ()=> isTokenValid(userToken);
 
 // capitalizeFirstLetter('hello world') => 'Hello world'

@@ -10,10 +10,9 @@ const AuthPage = () => {
   const isValidated = validateToken();
 
   return (
-  <>
-    <div className="flex items-center flex-row h-full p-0">
+    <div className="flex items-center flex-row h-[full] p-0">
         <div className='m-0  w-3/5' style={{ height: '100%' }}> 
-          <img src={landingImage} className='h-full' alt="Landing Image" /> 
+          <img src={landingImage} className='h-[100%]' alt="Landing Image" /> 
         </div>
         <div className='h-full w-2/5 items-center p-8'>
           <h1 className='text-neutral-950 w-full font-bold font-poppins mt-4'>Employment Application Review System</h1>
@@ -45,7 +44,7 @@ const AuthPage = () => {
 }
         </div>
       </div>
-  </>
+  
   )
 }
 

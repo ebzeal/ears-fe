@@ -53,3 +53,28 @@ export const getUser = async (id) => {
     return error;
   }  
   }
+
+export const getAllUsers = async () => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/user`, { method: 'GET'});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+  }
+
+
+export const getAllOpenings = async () => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/user`, { method: 'GET'});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+  }

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import UserProfile from './Views/Profile';
 import NavigationBar from './components/NavigationBar';
+import Users from './Views/Users';
 
 function App() {
   const [state, setState] = useState(null);
@@ -27,6 +28,7 @@ function App() {
     <Routes>
       <Route path="/" element={<AuthPage />} />
       <Route path="/user/profile" element={<UserProfile />} />
+      <Route path="/users" element={<Users />} />
     </Routes>
     </div>
       </MyContext.Provider>
