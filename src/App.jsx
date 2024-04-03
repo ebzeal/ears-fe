@@ -10,6 +10,7 @@ import NavigationBar from './components/NavigationBar';
 import Users from './Views/Users';
 import User from './Views/User';
 import UpdateUser from './Views/User/update-user';
+import Openings from './Views/Openings';
 
 function App() {
   const [state, setState] = useState(null);
@@ -33,6 +34,7 @@ function App() {
       <Route path="/users" element={<Users />} />
       <Route path="/user/:userId" element={<User />} />
       <Route path="/user/update/:userId" element={<UpdateUser />} />
+      <Route path="/openings" element={<Openings />} />
     </Routes>
     </div>
       </MyContext.Provider>

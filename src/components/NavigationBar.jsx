@@ -38,7 +38,7 @@ const isValidated = validateToken(userToken);
      {userInfo.userType !== 'faculty' ? null :
         <div className="p-4 rounded cursor-pointer hover:text-slate-300 hover:bg-slate-600">Committees</div>
   }
-        <div className="p-4 rounded cursor-pointer hover:text-slate-300 hover:bg-slate-600">Openings</div>
+        <div className="p-4 rounded cursor-pointer hover:text-slate-300 hover:bg-slate-600" onClick={() => navigate('/openings')}>Openings</div>
         <div className="p-4 rounded cursor-pointer hover:text-slate-300 hover:bg-slate-600" onClick={() => navigate('/user/profile')}>My Profile</div>
         <div className="p-4 rounded cursor-pointer hover:text-slate-300 hover:bg-slate-600 mr-[50%]" onClick={() => handleLogout()}>Log Out</div>
 

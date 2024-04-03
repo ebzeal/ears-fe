@@ -97,7 +97,7 @@ export const getAllOpenings = async () => {
   try {
   const {
       data: { payload }
-    } = await makeRequest(`/user`, { method: 'GET'});
+    } = await makeRequest(`/opening`, { method: 'GET'});
     return payload;
   } catch (error) {
     console.log(error);

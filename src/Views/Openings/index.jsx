@@ -2,18 +2,26 @@ import {useEffect, useState} from 'react';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-import { validateToken, capitalizeFirstLetter, capitalizeFirstWord, getTokenInfo } from '../../utils/helpers';
+import { validateToken,  getTokenInfo, getUserToken } from '../../utils/helpers';
 import { useNavigate } from "react-router-dom";
-import { getAllUsers } from '../../handlers/api';
+import { getAllOpenings } from '../../handlers/api';
 
 const Openings =()=> {
 
   const navigate = useNavigate();
-  const userToken = validateToken()
-    userToken ? '':  navigate('/');
-    const user = getTokenInfo(userToken)
-    const userId = user?.userId;
-  // const [users, setUsers] = useState();
+
+  const [user, setUser] = useState({
+    userInfo:{}
+  })
+
+  const userToken = getUserToken();
+  useEffect(()=> {
+const isValidated = validateToken(userToken);
+isValidated ? '':  navigate('/');
+    const userInfo = getTokenInfo(userToken);
+    setUser({userInfo})
+  },[navigate, userToken])
+  const userId = user.userInfo?.userId;
 
   const [rowData, setRowData] = useState([
   ]);
@@ -21,7 +29,7 @@ const Openings =()=> {
   useEffect(()=> {
     const fetchUser = async () => {
       try {
-        const user = await getAllUsers();
+        const user = await getAllOpenings();
         setRowData(user)
         return user;
       } catch (error) {
@@ -40,18 +48,22 @@ const Openings =()=> {
     // Column Definitions: Defines the columns to be displayed.
     const [colDefs, setColDefs] = useState([
       { field: "title" },
-      { field: "fullName" },
-      { field: "userType" },
-      { field: "committee" }
+      { field: "Description" },
+      { field: "Status" },
+      { field: "" }
     ]);
    
 
    return (
-    // wrapping container with theme & size
     <div
-     className="ag-theme-quartz min-h-[900px] h-full bg-slate-50 w-[80%] p-8 ml-[10%]" // applying the grid theme
-     style={{ height: 500 }} // the grid will fill the size of the parent container
+     className="ag-theme-quartz min-h-[900px] h-full bg-slate-50 w-[80%] p-8 ml-[10%]" 
+     style={{ height: 500 }}
     >
+      {user.userInfo.privilege === 'admin' &&
+       <div className='m-4 mt-2'>
+      <button className='rounded-full bg-slate-400 hover:bg-slate-200 cursor-pointer border-none' onClick={()=> {}}>Add New Opening</button>
+    </div>
+}
       <AgGridReact
           rowData={rowData}
           columnDefs={colDefs}
