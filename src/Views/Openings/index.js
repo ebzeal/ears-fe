@@ -22,7 +22,6 @@ const Openings =()=> {
     const fetchUser = async () => {
       try {
         const user = await getAllUsers();
-        console.log("🚀 ~ useEffect ~ user:", user);
         setRowData(user)
         return user;
       } catch (error) {

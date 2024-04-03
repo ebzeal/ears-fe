@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import landingImage from '../../assets/landing.jpg'
 import LoginComponent from '../../components/Login';
 import RegisterComponent from '../../components/Register';
-import { validateToken } from '../../utils/helpers';
+import { getUserToken, validateToken } from '../../utils/helpers';
 
 const AuthPage = () => {
   const [isAccount, setIsAccount] = useState(true)
-  const isValidated = validateToken();
+  const [isValidated, setIsValidated] = useState(true)
+  useEffect(()=>{
+    const userToken = getUserToken();
+    setIsValidated(validateToken(userToken));
+  }, [])
 
   return (
     <div className="flex items-center flex-row h-[full] p-0">

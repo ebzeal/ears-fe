@@ -8,6 +8,8 @@ import {
 import UserProfile from './Views/Profile';
 import NavigationBar from './components/NavigationBar';
 import Users from './Views/Users';
+import User from './Views/User';
+import UpdateUser from './Views/User/update-user';
 
 function App() {
   const [state, setState] = useState(null);
@@ -29,6 +31,8 @@ function App() {
       <Route path="/" element={<AuthPage />} />
       <Route path="/user/profile" element={<UserProfile />} />
       <Route path="/users" element={<Users />} />
+      <Route path="/user/:userId" element={<User />} />
+      <Route path="/user/update/:userId" element={<UpdateUser />} />
     </Routes>
     </div>
       </MyContext.Provider>

@@ -28,7 +28,7 @@ const LoginComponent = () => {
             setShowError(false)
           }, 5000)
       } else {
-        saveUserToken(loginUser)
+        await saveUserToken(loginUser)
         if(getUserToken()){
           navigate("/user/profile")
         }

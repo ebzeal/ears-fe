@@ -1,13 +1,14 @@
 import {decodeToken, isTokenValid} from "./jwt-decode";
 
 const tokenKey = 'userToken';
-export const saveUserToken = token => window.localStorage.setItem(tokenKey, token);
-export const getUserToken = () => window.localStorage.getItem(tokenKey);
+export const saveUserToken = token => localStorage.setItem(tokenKey, token);
+export const getUserToken = () => localStorage.getItem(tokenKey);
 export const removeUserToken = () => window.localStorage.removeItem(tokenKey);
 
-const userToken = getUserToken();
-export const getTokenInfo = ()=> decodeToken(userToken);
-export const validateToken = ()=> isTokenValid(userToken);
+export const getTokenInfo = (userToken)=> decodeToken(userToken);
+export const validateToken = (userToken)=> {
+   return isTokenValid(userToken)
+};
 
 // capitalizeFirstLetter('hello world') => 'Hello world'
 export const capitalizeFirstLetter = (str) => {

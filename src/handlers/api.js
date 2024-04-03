@@ -67,6 +67,32 @@ export const getAllUsers = async () => {
   }
 
 
+export const updateUser = async ({bodyPayload, id}) => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/user/${id}`, { method: 'PUT', body: bodyPayload });
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+  }
+
+
+export const toggleUserType = async (id) => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/user/toggleAccess/${id}`, { method: 'PUT'});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+  }
+
+
 export const getAllOpenings = async () => {
   try {
   const {

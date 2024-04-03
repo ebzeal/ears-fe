@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import johnDoe from '../../assets/johndoe.jpeg';
 import {capitalizeFirstLetter, capitalizeFirstWord, getTokenInfo, validateToken, getUserToken } from '../../utils/helpers';
 import { getUser } from '../../handlers/api';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 
-const UserProfile = () => {
+const User = () => {
   const navigate = useNavigate();
-
     const [userInfo, setUserInfo] = useState({
       tokenInfo:{}
     })
@@ -21,7 +20,8 @@ const UserProfile = () => {
     },[])
    
     const {tokenInfo} = userInfo;
-    const userId = tokenInfo?.userId;
+    const userTokenId = tokenInfo?.userId;
+    const {userId} = useParams()
 
 
     const [userDetails, setUserDetails] = useState();
@@ -32,13 +32,13 @@ const UserProfile = () => {
           setUserDetails(user)
           return user;
         } catch (error) {
-          console.log("🚀 ~ fetchUser ~ error:", error)
-          return error; 
+          // console.error("Error fetching user:", error);
+          return null; // or handle the error appropriately
         }
       };
     
       if (userId) {
-        fetchUser(userId); 
+        fetchUser(userId); // Call the function, but don't return its result here
       }
   }, [userId])
 
@@ -60,7 +60,6 @@ const UserProfile = () => {
       <p className='text-neutral-950 w-full text-xl font-poppins mt-4'><span className='text-base pr-8'>Email: </span> { capitalizeFirstLetter(userDetails.email) }</p>
       <p className='text-neutral-950 w-full text-xl font-poppins mt-4'><span className='text-base pr-8'>Phone: </span> { capitalizeFirstLetter(userDetails?.phone) }</p>
       <p className='text-neutral-950 w-full text-xl font-poppins mt-4'><span className='text-base pr-8'>Status: </span> { capitalizeFirstLetter(userDetails.userType) }</p>
-      <p className='text-neutral-950 w-full text-xl font-poppins mt-4'><span className='text-base pr-8'>Bio: </span> { capitalizeFirstLetter(userDetails.bio) }</p>
     <div className='mt-32'>
       <button className='rounded-full bg-slate-400 hover:bg-slate-200 cursor-pointer border-none' onClick={()=> onEditClick(userId)}>edit profile</button>
     </div>
@@ -71,4 +70,4 @@ const UserProfile = () => {
   )
 }
 
-export default UserProfile;
+export default User;

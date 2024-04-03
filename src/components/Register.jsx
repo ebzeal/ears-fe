@@ -47,7 +47,7 @@ const RegisterComponent = () => {
       password,
       confirmPassword});
 
-      if(registerUser?.response?.data?.status === 'failure'){
+      if(registerUser?.response?.data?.status === 'failure' || !registerUser){
           setError(registerUser.response.data.data.error)
           setShowError(true)
           setTimeout(()=> {
