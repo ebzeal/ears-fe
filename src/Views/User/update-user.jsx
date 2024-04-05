@@ -81,6 +81,7 @@ const UpdateUser = () => {
       email,
       phone, bio}, id:userId});
     //  const updatedUser = null
+    navigate(`/user/${userId}`)
 
       if(updatedUser?.response?.data?.status === 'failure' || !updatedUser){
           // setError(updatedUser.response.data.data.error)

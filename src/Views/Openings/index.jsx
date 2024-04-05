@@ -2,9 +2,9 @@ import {useEffect, useState} from 'react';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-import { validateToken,  getTokenInfo, getUserToken } from '../../utils/helpers';
+import { validateToken,  getTokenInfo, getUserToken, capitalizeFirstLetter } from '../../utils/helpers';
 import { useNavigate } from "react-router-dom";
-import { getAllOpenings } from '../../handlers/api';
+import { getAllOpenings, getOpening } from '../../handlers/api';
 
 const Openings =()=> {
 
@@ -27,32 +27,40 @@ isValidated ? '':  navigate('/');
   ]);
 
   useEffect(()=> {
-    const fetchUser = async () => {
+    const fetchOpening = async () => {
       try {
-        const user = await getAllOpenings();
-        setRowData(user)
-        return user;
+        const opening = await getAllOpenings();
+        setRowData(opening)
+        return opening;
       } catch (error) {
         // console.error("Error fetching user:", error);
         return null; // or handle the error appropriately
       }
     };
-    if (userId) {
-      fetchUser(userId); // Call the function, but don't return its result here
-    }
-}, [userId])
+    // if (userId) {
+      fetchOpening(); // Call the function, but don't return its result here
+    // }
+}, [])
 
     // Row Data: The data to be displayed.
     
-    
+   
+   
+    const handleRowClicked = (params) => {
+      if(user.userInfo.userType === 'applicant'){
+      navigate(`/opening/${params.data._id}`);
+    } else {
+      navigate(`/opening/edit/${params.data._id}`);
+      }
+    }
+ 
     // Column Definitions: Defines the columns to be displayed.
     const [colDefs, setColDefs] = useState([
-      { field: "title" },
-      { field: "Description" },
-      { field: "Status" },
-      { field: "" }
+      { field: "title", cellRenderer: CellRenderer },
+      { field: "description", cellRenderer: CellRenderer },
+      { field: "status", cellRenderer: StatusRenderer },
+      { field: "", cellRenderer: AppliedCellRenderer },
     ]);
-   
 
    return (
     <div
@@ -61,15 +69,54 @@ isValidated ? '':  navigate('/');
     >
       {user.userInfo.privilege === 'admin' &&
        <div className='m-4 mt-2'>
-      <button className='rounded-full bg-slate-400 hover:bg-slate-200 cursor-pointer border-none' onClick={()=> {}}>Add New Opening</button>
+      <button className='rounded-full bg-slate-400 hover:bg-slate-200 cursor-pointer border-none' onClick={()=> {navigate('/opening/new')}}>Add New Opening</button>
     </div>
 }
+      
       <AgGridReact
           rowData={rowData}
           columnDefs={colDefs}
+          // onRowClicked={handleRowClicked}
       />
     </div>
    )
+}
+
+const AppliedCellRenderer = (params) => {
+  console.log("🚀 ~ AppliedCellRenderer ~ params:", params)
+  const userToken = getUserToken();
+    const userInfo = getTokenInfo(userToken);
+
+  const isApplied = params.data.applications.some(item=>item.user === userInfo.userId);
+  return (<>
+  {isApplied ? <p>Applied</p> : null}
+  </>)
+}
+
+const CellRenderer = (params) => {
+  const navigate = useNavigate();
+  const userToken = getUserToken();
+    const userInfo = getTokenInfo(userToken);
+
+  return (<p onClick={()=> {  
+    if(userInfo.userType === 'applicant'){
+      navigate(`/opening/${params.data._id}`);
+    } else {
+      navigate(`/opening/edit/${params.data._id}`);
+      }}}>
+      {params.value}
+  </p>)
+}
+
+const StatusRenderer = (params) => {
+  const status = params.data.status;
+  return (
+  <div className={status === 'open' ? 'bg-green-300  pl-10' : 'bg-red-400  pl-10'}>
+    <p>
+      {capitalizeFirstLetter(params.data.status)}
+  </p>
+    </div>
+  )
 }
 
 export default Openings;

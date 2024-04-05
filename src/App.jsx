@@ -11,6 +11,9 @@ import Users from './Views/Users';
 import User from './Views/User';
 import UpdateUser from './Views/User/update-user';
 import Openings from './Views/Openings';
+import NewOpening from './Views/Openings/create-opening';
+import UpdateOpening from './Views/Openings/edit-opening';
+import ViewOpening from './Views/Openings/view-opening';
 
 function App() {
   const [state, setState] = useState(null);
@@ -35,6 +38,9 @@ function App() {
       <Route path="/user/:userId" element={<User />} />
       <Route path="/user/update/:userId" element={<UpdateUser />} />
       <Route path="/openings" element={<Openings />} />
+      <Route path="/opening/:openingId" element={<ViewOpening />} />
+      <Route path="/opening/edit/:openingId" element={<UpdateOpening />} />
+      <Route path="/opening/new" element={<NewOpening />} />
     </Routes>
     </div>
       </MyContext.Provider>

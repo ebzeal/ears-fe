@@ -92,7 +92,6 @@ export const toggleUserType = async (id) => {
   }  
   }
 
-
 export const getAllOpenings = async () => {
   try {
   const {
@@ -103,4 +102,52 @@ export const getAllOpenings = async () => {
     console.log(error);
     return error;
   }  
+}
+
+export const createOpening = async (bodyPayload) => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/opening`, { method: 'POST', body: bodyPayload});
+      return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+}
+
+export const getOpening = async (id) => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/opening/${id}`, { method: 'GET'});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
   }
+
+export const updateOpening = async ({bodyPayload, id}) => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/opening/${id}`, { method: 'PUT', body: bodyPayload });
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+}
+
+export const applyToOpening = async (id) => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/opening/apply/${id}`, { method: 'POST'});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+}
