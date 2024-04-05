@@ -177,3 +177,27 @@ export const submitReview = async ({bodyPayload, ids}) => {
     return error;
   }  
 }
+
+export const createCommittee = async (bodyPayload) => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/committee`, { method: 'POST', body: bodyPayload});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+}
+
+export const getCommittees = async () => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/committees`, { method: 'GET'});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+}

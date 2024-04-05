@@ -15,6 +15,8 @@ import NewOpening from './Views/Openings/create-opening';
 import UpdateOpening from './Views/Openings/edit-opening';
 import ViewOpening from './Views/Openings/view-opening';
 import Application from './Views/Application';
+import Committee from './Views/Committee';
+import CreateCommittee from './Views/Committee/create-committee';
 
 function App() {
   const [state, setState] = useState(null);
@@ -43,6 +45,8 @@ function App() {
       <Route path="/opening/edit/:openingId" element={<UpdateOpening />} />
       <Route path="/opening/new" element={<NewOpening />} />
       <Route path="/opening/:openingId/application/:applicationId" element={<Application />} />
+      <Route path="/committees" element={<Committee />} />
+      <Route path="/committee/new" element={<CreateCommittee />} />
     </Routes>
     </div>
       </MyContext.Provider>

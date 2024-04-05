@@ -80,7 +80,7 @@ const ViewOpening = () => {
           <option value="open">Open</option>
           <option value="closed">Closed</option>
         </select>
-        <textarea name="description" id="description" cols="30" rows="5" label="description" placeholder=' opening description' value={ description  }  className="rounded" disabled>{description}</textarea>
+        <textarea name="description" id="description" cols="30" rows="5" label="description" placeholder='job description' value={ description  }  className="rounded" disabled>{description}</textarea>
        
         {user.userInfo.userType==='applicant' &&
        <div className='m-4 mt-2'>

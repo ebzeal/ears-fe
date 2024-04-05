@@ -94,7 +94,7 @@ const NewOpening = () => {
           <option value="open">Open</option>
           <option value="closed">Closed</option>
         </select>
-        <textarea name="description" id="description" cols="30" rows="5" label="description" placeholder=' opening description' onChange={handleChange} value={ description  }  className="rounded">{description}</textarea>
+        <textarea name="description" id="description" cols="30" rows="5" label="description" placeholder='job description' onChange={handleChange} value={ description  }  className="rounded">{description}</textarea>
        
         <div className="buttons">
           <button className="bg-slate-950 text-slate-300 mt-12" type="submit"> Create Opening </button>

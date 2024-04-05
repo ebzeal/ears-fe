@@ -124,7 +124,7 @@ setRowData(sortedApplications)
           <option value="open">Open</option>
           <option value="closed">Closed</option>
         </select>
-        <textarea name="description" id="description" cols="30" rows="5" label="description" placeholder=' opening description' onChange={handleChange} value={ description  }  className="rounded">{description}</textarea>
+        <textarea name="description" id="description" cols="30" rows="5" label="description" placeholder='job description' onChange={handleChange} value={ description  }  className="rounded">{description}</textarea>
        
        {tokenInfo.privilege === 'admin' &&
         <div className="buttons">
