@@ -13,7 +13,6 @@ const RegisterComponent = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
     password: "",
     confirmPassword: ""
   });
@@ -35,6 +34,7 @@ const RegisterComponent = () => {
       setShowError(true)
       setTimeout(()=> {
         setShowError(false)
+        setError()
       }, 5000)
     //  return (<Notify text={"passwords don't match"} type="error" />)
       return;
@@ -43,7 +43,6 @@ const RegisterComponent = () => {
       firstName,
       lastName,
       email,
-      phone,
       password,
       confirmPassword});
 

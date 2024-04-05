@@ -78,7 +78,7 @@ const CreateCommittee = () => {
             // }, 5000)
         } else {
          
-            // navigate(`/openings`)
+            navigate(`/committees`)
           }
         } 
 

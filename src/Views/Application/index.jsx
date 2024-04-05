@@ -50,9 +50,8 @@ isValidated ? '':  navigate('/');
   };
   const handleSubmit = async e => {
     e.preventDefault();
-    // const submittedReview = await submitReview( {bodyPayload:{review, rating,comments}, ids:{openingId, applicationId}});
-          // console.log("🚀 ~ handleSubmit ~ submittedReview:", submittedReview)
-          navigate(`/opening/edit/${openingId}`)
+      await submitReview( {bodyPayload:{review, rating,comments}, ids:{openingId, applicationId}});
+        navigate(`/opening/edit/${openingId}`)
       } 
 
 

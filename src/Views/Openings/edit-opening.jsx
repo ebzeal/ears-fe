@@ -28,11 +28,7 @@ const UpdateOpening = () => {
     const {tokenInfo} = userInfo;
   
     const {openingId} = useParams()
-// useEffect(()=>{
-  
-// })
-const [rowData, setRowData] = useState([
-]);
+const [rowData, setRowData] = useState([]);
 
     const [openingDetails, setOpeningDetails] = useState();
 
@@ -42,28 +38,40 @@ const [rowData, setRowData] = useState([
       const fetchOpening = async (id) => {
         try {
           const opening = await getOpening(id);
+          console.log("🚀 ~ fetchOpening ~ opening:", opening)
           setOpeningDetails(opening)
-          // setRowData(opening.applications)
-
-    // Sort applications by rating
-const sortedApplications = openingDetails.applications.sort((a, b) => {
-  // Compare ratings in descending order
-  return b.reviews[0].rating - a.reviews[0].rating;
-});
-setRowData(sortedApplications)
-
+          setRowData(opening.applications);
           return opening;
         } catch (error) {
           console.error("Error fetching opening:", error);
           return error; 
         }
       };
-    
-      // if (userId) {
-        fetchOpening(openingId); // Call the function, but don't return its result here
-      // }
+        fetchOpening(openingId); 
   }, [openingId])
 
+  useEffect(() => {
+    // Check if openingDetails is not null
+    if (openingDetails && openingDetails.applications) {
+      const sortedApplications = openingDetails.applications.sort((a, b) => {
+        // Check if both applications have reviews
+        if (a.reviews.length === 0 && b.reviews.length === 0) {
+          return 0; // If both have no reviews, consider them equal
+        }
+        // Check if only one application has reviews
+        if (a.reviews.length === 0) {
+          return 1; // If only a has no reviews, b should come first
+        }
+        if (b.reviews.length === 0) {
+          return -1; // If only b has no reviews, a should come first
+        }
+        // Compare ratings in descending order
+        return b.reviews[0].rating - a.reviews[0].rating;
+      });
+      console.log("🚀 ~ sortedApplications ~ sortedApplications:", sortedApplications);
+      setRowData(sortedApplications);
+    }
+  }, [openingDetails]);
 
   const [colDefs, setColDefs] = useState([
     { field: "user",  cellRenderer: UserCellRenderer },
@@ -75,6 +83,7 @@ setRowData(sortedApplications)
   if(!openingDetails){
     return null
   }
+
 
   const { title,
   description,
@@ -97,11 +106,11 @@ setRowData(sortedApplications)
    await updateOpening( {bodyPayload:{title,
     description,
     status}, id:openingId});
-          navigate(`/openings`)
+          navigate(`/opening/${openingId}`)
       } 
 
       const handleRowClicked =  (params) => {
-              navigate(`/opening/${openingId}/application/${params.data._id}`)
+              navigate(`/opening/${openingId}/application/${params.data._id}`);
           } 
 
   return (
@@ -190,7 +199,6 @@ const BioRenderer = (params) => {
 
 
 const RatingRenderer = (params) => {
-  console.log("🚀 ~ RatingRenderer ~ params:", params)
   const {reviews} = params.data;
   let totalRating =0;
   const numberOfReviews = reviews.length;
@@ -199,7 +207,7 @@ const RatingRenderer = (params) => {
     return  null ;
   });
 
-  const ratingAvg = totalRating/numberOfReviews;
+  const ratingAvg = totalRating/numberOfReviews || 0;
 
   return (<p>
       { `${ratingAvg}` }
