@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
 
 export const apiInstance = axios.create({
-  baseURL: 'http://localhost:5500/api/v1/'
+  baseURL: process.env.NODE_ENV === 'development'? 'http://localhost:3000/api/v1/' : '3.128.180.55/api/v1/'
 });
 
 export const makeRequest = (url, options = { method: 'GET' }) => {
