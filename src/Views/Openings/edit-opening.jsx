@@ -36,12 +36,22 @@ const [rowData, setRowData] = useState([
 
     const [openingDetails, setOpeningDetails] = useState();
 
+
+
     useEffect(()=> {
       const fetchOpening = async (id) => {
         try {
           const opening = await getOpening(id);
           setOpeningDetails(opening)
-          setRowData(opening.applications)
+          // setRowData(opening.applications)
+
+    // Sort applications by rating
+const sortedApplications = openingDetails.applications.sort((a, b) => {
+  // Compare ratings in descending order
+  return b.reviews[0].rating - a.reviews[0].rating;
+});
+setRowData(sortedApplications)
+
           return opening;
         } catch (error) {
           console.error("Error fetching opening:", error);
@@ -59,6 +69,7 @@ const [rowData, setRowData] = useState([
     { field: "user",  cellRenderer: UserCellRenderer },
     { field: "bio",  cellRenderer: BioRenderer },
     { field: "status", cellRenderer: FullNameRenderer},
+    {field:"ratings", cellRenderer: RatingRenderer}
 
  ]);
   if(!openingDetails){
@@ -88,6 +99,10 @@ const [rowData, setRowData] = useState([
     status}, id:openingId});
           navigate(`/openings`)
       } 
+
+      const handleRowClicked =  (params) => {
+              navigate(`/opening/${openingId}/application/${params.data._id}`)
+          } 
 
   return (
     <>
@@ -123,7 +138,7 @@ const [rowData, setRowData] = useState([
 { openingDetails &&tokenInfo.userType==='faculty' ?
 
 <div className='text-slate-600 font-poppins my-16'>
-  <h2 className='font-bold mx-32'>Applicants</h2>
+  <h2 className='mx-32'> <span className='font-bold '>{openingDetails.applications.length} Applicant/s</span> sorted by rating (with the highest rated candidate at the top)</h2>
 
   <div
      className="ag-theme-quartz min-h-[400px] h-full bg-slate-50 w-[100%] p-8 " 
@@ -132,6 +147,7 @@ const [rowData, setRowData] = useState([
       <AgGridReact
           rowData={rowData}
           columnDefs={colDefs}
+          onRowClicked={handleRowClicked}
       />
     </div>
 </div>
@@ -145,17 +161,20 @@ const [rowData, setRowData] = useState([
 
 const FullNameRenderer = (params) => {
   const navigate = useNavigate();
-  return (<p onClick={()=> {  
-  navigate(`/user/${params.data._id}`)}}>
-      {params.value}
-  </p>)
+  return (
+  // <p onClick={()=> {  
+  // navigate(`/user/${params.data._id}`)}}>
+  //     {params.value}
+  // </p>
+  <p>
+        {params.value}
+    </p>
+  )
 }
 
 const UserCellRenderer = (params) => {
   const navigate = useNavigate();
-  return (<p onClick={()=> {  
-  navigate(`/user/${params.data.user._id}`)
-}}>
+  return (<p>
       {params.data.user.title} {params.data.user.fullName}
    </p>
   )
@@ -168,27 +187,25 @@ const BioRenderer = (params) => {
   )
 }
 
-// const CheckboxRenderer = (params) => {
-//   return (
-//     <>
-//     <form className='flex flex-row space-x-4'>
-//     <input type='checkbox' id='considered' name='considered' value="Considered" label="Considered" className='mb-6 bg-zinc-300' />
-//     <label htmlFor="considered">Considered</label>
-//     <input type='checkbox' id='rejected' name='rejected' value="Rejected"  className='mb-6 bg-zinc-300'/>
-//     <label htmlFor="rejected">Rejected</label>
-//     </form>
-//   </>
-//   )
-// }
-// const RateRenderer = (params) => {
-//   return (
-//     <>
-//     <form className='flex flex-row space-x-4'>
-//     <input type='number' id='considered' name='considered' value="Considered" className='mb-20' />
-//     <input type='button' id='rejected' name='rejected' value="Rejected"  className='mb-6 bg-zinc-300'/>
-//     </form>
-//   </>
-//   )
-// }
+
+
+const RatingRenderer = (params) => {
+  console.log("🚀 ~ RatingRenderer ~ params:", params)
+  const {reviews} = params.data;
+  let totalRating =0;
+  const numberOfReviews = reviews.length;
+  reviews.map(review => {
+   totalRating += review.rating
+    return  null ;
+  });
+
+  const ratingAvg = totalRating/numberOfReviews;
+
+  return (<p>
+      { `${ratingAvg}` }
+   </p>
+  )
+}
+
 
 export default UpdateOpening;

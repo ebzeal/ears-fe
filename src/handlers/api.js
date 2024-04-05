@@ -151,3 +151,29 @@ export const applyToOpening = async (id) => {
     return error;
   }  
 }
+
+export const getApplication = async (openingId, applicationId) => {
+  try {
+  const {
+      data: { payload }
+    } = await makeRequest(`/opening/${openingId}/application/${applicationId}`, { method: 'GET'});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+}
+
+
+export const submitReview = async ({bodyPayload, ids}) => {
+  try {
+    const {openingId, applicationId} = ids
+  const {
+      data: { payload }
+    } = await makeRequest(`/opening/${openingId}/review/${applicationId}`, { method: 'POST', body: bodyPayload});
+    return payload;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }  
+}

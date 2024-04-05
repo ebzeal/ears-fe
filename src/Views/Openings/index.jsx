@@ -83,7 +83,6 @@ isValidated ? '':  navigate('/');
 }
 
 const AppliedCellRenderer = (params) => {
-  console.log("🚀 ~ AppliedCellRenderer ~ params:", params)
   const userToken = getUserToken();
     const userInfo = getTokenInfo(userToken);
 

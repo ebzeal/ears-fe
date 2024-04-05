@@ -14,6 +14,7 @@ import Openings from './Views/Openings';
 import NewOpening from './Views/Openings/create-opening';
 import UpdateOpening from './Views/Openings/edit-opening';
 import ViewOpening from './Views/Openings/view-opening';
+import Application from './Views/Application';
 
 function App() {
   const [state, setState] = useState(null);
@@ -41,6 +42,7 @@ function App() {
       <Route path="/opening/:openingId" element={<ViewOpening />} />
       <Route path="/opening/edit/:openingId" element={<UpdateOpening />} />
       <Route path="/opening/new" element={<NewOpening />} />
+      <Route path="/opening/:openingId/application/:applicationId" element={<Application />} />
     </Routes>
     </div>
       </MyContext.Provider>
